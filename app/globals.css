@@ -79,3 +79,31 @@ html {
   background-size: 200% 200%;
   animation: gradient-animation 5s ease infinite;
 }
+
+/* Efecto de desplazamiento suave para la imagen de fondo */
+.parallax-bg {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Mejora de efectos de luz */
+.light-effect {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.3;
+  animation: pulse 7s infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(1.1);
+  }
+}

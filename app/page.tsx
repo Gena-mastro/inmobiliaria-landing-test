@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react"
+import { useState, useRef } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -8,7 +8,6 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { Phone, MapPin, ArrowRight, Check, Star } from "lucide-react"
 
 export default function LandingPage() {
-  const [currentImage, setCurrentImage] = useState(0)
   const [showModal, setShowModal] = useState(false)
   const containerRef = useRef(null)
   const { scrollYProgress } = useScroll({
@@ -20,51 +19,25 @@ export default function LandingPage() {
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.8, 0])
 
-  const images = [
-    "/placeholder.svg?height=1080&width=1920&text=Edificio+Moderno",
-    "/placeholder.svg?height=1080&width=1920&text=Apartamento+Lujo",
-    "/placeholder.svg?height=1080&width=1920&text=Penthouse+Exclusivo",
-  ]
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % images.length)
-    }, 5000)
-    return () => clearInterval(timer)
-  }, [images.length])
-
   const handleContactClick = () => {
     setShowModal(true)
   }
 
   return (
     <div ref={containerRef} className="relative min-h-screen overflow-hidden bg-black">
-      {/* Background Images Slider with Parallax */}
+      {/* Background Image with Overlay */}
       <div className="fixed inset-0 z-0">
-        {images.map((img, index) => (
-          <motion.div
-            key={index}
-            className="absolute inset-0 w-full h-full"
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: currentImage === index ? 1 : 0,
-              scale: currentImage === index ? 1.05 : 1,
-            }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-            style={{ y: backgroundY }}
-          >
-            <Image
-              src={img || "/placeholder.svg"}
-              alt={`Propiedad ${index + 1}`}
-              fill
-              className="object-cover brightness-[0.4]"
-              priority={index === 0}
-            />
-          </motion.div>
-        ))}
+        {/* Imagen de fondo principal */}
+        <Image
+          src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
+          alt="Edificio de lujo"
+          fill
+          className="object-cover brightness-[0.5]"
+          priority
+        />
 
         {/* Overlay Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
 
         {/* Animated Light Effect */}
         <div className="absolute inset-0 opacity-30">
