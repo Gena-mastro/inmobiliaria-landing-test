@@ -9,6 +9,9 @@ import { Phone, MapPin, ArrowRight, Check, Star } from "lucide-react"
 
 export default function LandingPage() {
   const [showModal, setShowModal] = useState(false)
+  const [nombre, setNombre] = useState("")
+  const [telefono, setTelefono] = useState("")
+  const [email, setEmail] = useState("")
   const containerRef = useRef(null)
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -73,7 +76,12 @@ export default function LandingPage() {
               <Button
                 variant="outline"
                 className="border-white text-white hover:bg-white hover:text-black transition-all duration-300"
-                onClick={handleContactClick}
+                onClick={() => {
+                  window.open(
+                    "https://wa.me/5493517961555?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n!",
+                    "_blank",
+                  )
+                }}
               >
                 <Phone className="mr-2 h-4 w-4" />
                 Contáctanos
@@ -138,8 +146,11 @@ export default function LandingPage() {
                   size="lg"
                   variant="outline"
                   className="border-white text-white hover:bg-white hover:text-black text-lg px-8 py-6 rounded-full transition-all duration-300 transform hover:-translate-y-1"
+                  onClick={() => {
+                    document.getElementById("caracteristicas")?.scrollIntoView({ behavior: "smooth" })
+                  }}
                 >
-                  Ver Propiedades
+                  Explorar Características
                 </Button>
               </motion.div>
             </motion.div>
@@ -147,16 +158,20 @@ export default function LandingPage() {
         </section>
 
         {/* Features Section */}
-        <section className="relative py-20 bg-gradient-to-b from-black/0 via-black/80 to-black">
+        <section
+          id="caracteristicas"
+          className="relative py-20 pt-32 bg-gradient-to-b from-black/0 via-black/80 to-black"
+          style={{ scrollMarginTop: "100px" }}
+        >
           <div className="container mx-auto px-4">
             <motion.div
               className="text-center mb-16"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true, margin: "100px 0px 0px 0px", amount: 0.8 }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 mt-8">
                 Características <span className="text-primary">Exclusivas</span>
               </h2>
               <p className="text-white/70 max-w-2xl mx-auto">
@@ -233,19 +248,33 @@ export default function LandingPage() {
                   <Input
                     placeholder="Nombre completo"
                     className="bg-white/10 border-white/20 text-white placeholder:text-white/50 h-12 rounded-lg focus:border-primary"
+                    value={nombre}
+                    onChange={(e) => setNombre(e.target.value)}
                   />
                   <Input
                     placeholder="Teléfono"
                     className="bg-white/10 border-white/20 text-white placeholder:text-white/50 h-12 rounded-lg focus:border-primary"
+                    value={telefono}
+                    onChange={(e) => setTelefono(e.target.value)}
                   />
                 </div>
                 <div className="space-y-4">
                   <Input
                     placeholder="Email"
                     className="bg-white/10 border-white/20 text-white placeholder:text-white/50 h-12 rounded-lg focus:border-primary"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
-                  <Button className="w-full bg-primary hover:bg-primary/90 text-white h-12 rounded-lg shadow-lg hover:shadow-primary/50 transition-all duration-300 transform hover:-translate-y-1">
-                    ¡Quiero Información Ahora!
+                  <Button
+                    className="w-full bg-primary hover:bg-primary/90 text-white h-12 rounded-lg shadow-lg hover:shadow-primary/50 transition-all duration-300"
+                    onClick={() => {
+                      const mensaje = `Hola, me gustaría obtener más información! Mis datos son:\nNombre: ${nombre}\nTeléfono: ${telefono}\nEmail: ${email}`
+                      const mensajeCodificado = encodeURIComponent(mensaje)
+                      window.open(`https://wa.me/5493517961555?text=${mensajeCodificado}`, "_blank")
+                      setShowModal(false)
+                    }}
+                  >
+                    Enviar por WhatsApp
                   </Button>
                 </div>
               </div>
@@ -371,18 +400,32 @@ export default function LandingPage() {
                 <Input
                   placeholder="Nombre completo"
                   className="bg-white/10 border-white/20 text-white placeholder:text-white/50 h-12 rounded-lg focus:border-primary"
+                  value={nombre}
+                  onChange={(e) => setNombre(e.target.value)}
                 />
                 <Input
                   placeholder="Teléfono"
                   className="bg-white/10 border-white/20 text-white placeholder:text-white/50 h-12 rounded-lg focus:border-primary"
+                  value={telefono}
+                  onChange={(e) => setTelefono(e.target.value)}
                 />
                 <Input
                   placeholder="Email"
                   className="bg-white/10 border-white/20 text-white placeholder:text-white/50 h-12 rounded-lg focus:border-primary"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <div className="pt-2">
-                  <Button className="w-full bg-primary hover:bg-primary/90 text-white h-12 rounded-lg shadow-lg hover:shadow-primary/50 transition-all duration-300">
-                    Enviar
+                  <Button
+                    className="w-full bg-primary hover:bg-primary/90 text-white h-12 rounded-lg shadow-lg hover:shadow-primary/50 transition-all duration-300"
+                    onClick={() => {
+                      const mensaje = `Hola, me gustaría obtener más información! Mis datos son:\nNombre: ${nombre}\nTeléfono: ${telefono}\nEmail: ${email}`
+                      const mensajeCodificado = encodeURIComponent(mensaje)
+                      window.open(`https://wa.me/5493517961555?text=${mensajeCodificado}`, "_blank")
+                      setShowModal(false)
+                    }}
+                  >
+                    Enviar por WhatsApp
                   </Button>
                 </div>
               </div>
